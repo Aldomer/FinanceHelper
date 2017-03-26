@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -20,66 +21,7 @@ namespace FinanceHelper
 
             AddFinanceHeader(dgChase);
 
-            ColumnDefinition gridCol1 = new ColumnDefinition();
-
-            System.Windows.GridLength gridLength = new GridLength(100);
-
-            gridCol1.Width = gridLength;
-
-            ColumnDefinition gridCol2 = new ColumnDefinition();
-
-            ColumnDefinition gridCol3 = new ColumnDefinition();
-
-            gridTest.ColumnDefinitions.Add(gridCol1);
-
-            gridTest.ColumnDefinitions.Add(gridCol2);
-
-            gridTest.ColumnDefinitions.Add(gridCol3);
-
-            Button tmp = new Button();
-
-            tmp.Content = "Test1";
-            tmp.Name = "Test1";
-            tmp.Height = 25;
-            tmp.Width = 90;
-
-            gridTest.Children.Add(tmp);
-
-            Button tmp2 = new Button();
-
-            tmp2.Content = "Test2";
-            tmp2.Name = "Test2";
-            tmp2.Height = 25;
-            tmp2.Width = 90;
-
-            gridTest.Children.Add(tmp2);
-            //gridTest.Children.Add(tmp);
-            //gridTest.Children.Add(tmp);
-
             AddFinanceStatsHeader(dgChaseStats);
-
-            for (int i = 0; i < 7; i++)
-            {
-                AddButtonTest(i);
-            }
-        }
-
-        private void AddButtonTest(int test)
-        {
-            Button tmp = new Button();
-
-            tmp.Content = "Test" + test;
-            tmp.Name = "Test" + test;
-            tmp.Height = 50;
-            tmp.Width = 100;
-
-            FinanceStatsDisplay financeStatsDisplay = new FinanceStatsDisplay();
-
-            financeStatsDisplay.Category = tmp;
-            financeStatsDisplay.Amount = "$500.00";
-            financeStatsDisplay.Percent = "50%";
-
-            dgChaseStats.Items.Add(financeStatsDisplay);
         }
 
         private void btnChase_Click(object sender, RoutedEventArgs e)
@@ -138,14 +80,31 @@ namespace FinanceHelper
 
         public class FinanceStatsDisplay
         {
-            public Button Category;
+            public string Category { get; set; }
             public string Amount { get; set; }
             public string Percent { get; set; }
         }
 
         private void PopulateFinanceStats(List<FinanceData> financeData, DataGrid dataGrid)
         {
+            List<FinanceData> beauty = financeData.Where(finance => finance.Category == FinanceCategory.Beauty).ToList();
 
+            foreach (FinanceCategory financeCategory in Enum.GetValues(typeof(FinanceCategory)))
+            {
+                List<FinanceData> financeDataCategory = financeData.Where(finance => finance.Category == financeCategory).ToList();
+
+                if (financeDataCategory.Count > 0)
+                {
+                    FinanceStatsDisplay item = new FinanceStatsDisplay
+                    {
+                        Category = financeCategory.ToString(),
+                        Amount = "$0.00",
+                        Percent = "0%"
+                    };
+
+                    dataGrid.Items.Add(item);
+                }
+            }
         }
 
         #region FinanceHeader
@@ -192,8 +151,8 @@ namespace FinanceHelper
         {
             DataGridTextColumn dgTextColumnCategory = new DataGridTextColumn();
             dgTextColumnCategory.Header = "Category";
-            dgTextColumnCategory.Binding = new Binding("Category");
             dgTextColumnCategory.Width = 100;
+            dgTextColumnCategory.Binding = new Binding("Category");
             dataGrid.Columns.Add(dgTextColumnCategory);
 
             DataGridTextColumn dgTextColumnAmount = new DataGridTextColumn();
