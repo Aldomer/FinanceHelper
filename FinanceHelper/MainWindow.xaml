@@ -1,0 +1,26 @@
+﻿<Window x:Class="FinanceHelper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FinanceHelper"
+        mc:Ignorable="d"
+        Title="Finance Helper" Height="1000" Width="1500">
+    <Grid>
+        <DataGrid x:Name="dgChase" HorizontalAlignment="Left" VerticalAlignment="Top" Height="950" Width="825" AutoGenerateColumns="False" Margin="261,10,0,0" Visibility="Visible"/>
+        <Button x:Name="btnChase" Content="Chase" HorizontalAlignment="Left" Height="50" Margin="10,10,0,0" VerticalAlignment="Top" Width="242" Click="btnChase_Click"/>
+        <Button x:Name="btnCyprus" Content="Cyprus" HorizontalAlignment="Left" Height="50" Margin="10,65,0,0" VerticalAlignment="Top" Width="242" Click="btnCyprus_Click"/>
+        <Button x:Name="btnCapital" Content="Capital" HorizontalAlignment="Left" Height="50" Margin="10,120,0,0" VerticalAlignment="Top" Width="242" Click="btnCapital_Click"/>
+        <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" Margin="1170,202,0,0" VerticalAlignment="Top"/>
+        <DataGrid x:Name="dgChaseStats" HorizontalAlignment="Left" Height="625" Margin="1095,335,0,0" VerticalAlignment="Top" Width="380"/>
+        <ListView x:Name="listView" HorizontalAlignment="Left" Height="305" Margin="1095,10,0,0" VerticalAlignment="Top" Width="380">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+            <Button x:Name="button" Content="Entertainment     $500.00    56%" Width="370"/>
+            <Grid x:Name="gridTest" Height="190" Width="370"/>
+        </ListView>
+    </Grid>
+</Window>
