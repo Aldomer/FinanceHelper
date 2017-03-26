@@ -7,7 +7,7 @@ namespace FinanceHelper.Classes
 {
     internal class BankFileLoader
     {
-        internal List<FinanceData> ChaseFinanceData
+        internal FinanceData ChaseFinanceData
         {
             get
             {
@@ -15,7 +15,7 @@ namespace FinanceHelper.Classes
             }
         }
 
-        private List<FinanceData> _chaseFinanceData = new List<FinanceData>();
+        private FinanceData _chaseFinanceData = new FinanceData();
 
         internal enum Banks
         {
@@ -119,7 +119,7 @@ namespace FinanceHelper.Classes
                     continue;
                 }
 
-                FinanceData financeData = new FinanceData();
+                FinanceData.FinanceDataItem financeData = new FinanceData.FinanceDataItem();
 
                 foreach (Excel.Range column in row.Columns)
                 {
@@ -157,7 +157,7 @@ namespace FinanceHelper.Classes
                 }
 
                 financeData.SetCategory();
-                _chaseFinanceData.Add(financeData);
+                _chaseFinanceData.AddFinanceDataItem(financeData);
             }
         }
 

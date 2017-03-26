@@ -11,6 +11,8 @@
         <Button x:Name="btnChase" Content="Chase" HorizontalAlignment="Left" Height="50" Margin="10,10,0,0" VerticalAlignment="Top" Width="242" Click="btnChase_Click"/>
         <Button x:Name="btnCyprus" Content="Cyprus" HorizontalAlignment="Left" Height="50" Margin="10,65,0,0" VerticalAlignment="Top" Width="242" Click="btnCyprus_Click"/>
         <Button x:Name="btnCapital" Content="Capital" HorizontalAlignment="Left" Height="50" Margin="10,120,0,0" VerticalAlignment="Top" Width="242" Click="btnCapital_Click"/>
-        <DataGrid x:Name="dgChaseStats" HorizontalAlignment="Left" Height="625" Margin="1102,10,0,0" VerticalAlignment="Top" Width="380"/>
+        <DataGrid x:Name="dgChaseStats" HorizontalAlignment="Left" Height="470" Margin="1102,10,0,0" VerticalAlignment="Top" Width="371"/>
+        <DataGrid x:Name="dgAllStats" HorizontalAlignment="Left" Height="450" Margin="1102,510,0,0" VerticalAlignment="Top" Width="371"/>
+        <Label x:Name="label" Content="All" HorizontalAlignment="Left" Height="25" Margin="1102,485,0,0" VerticalAlignment="Top" Width="371" Background="#FF6C6C6C" FontWeight="Bold" HorizontalContentAlignment="Center"/>
     </Grid>
 </Window>

@@ -22,6 +22,8 @@ namespace FinanceHelper
             AddFinanceHeader(dgChase);
 
             AddFinanceStatsHeader(dgChaseStats);
+
+            AddFinanceStatsHeader(dgAllStats);
         }
 
         private void btnChase_Click(object sender, RoutedEventArgs e)
@@ -30,9 +32,11 @@ namespace FinanceHelper
 
             _bankFileLoader.LoadChase();
 
-            PopulateFinanceData(_bankFileLoader.ChaseFinanceData, dgChase);
+            PopulateFinanceData(_bankFileLoader.ChaseFinanceData.FinanceDataList, dgChase);
 
             PopulateFinanceStats(_bankFileLoader.ChaseFinanceData, dgChaseStats);
+
+            PopulateAllStats(dgAllStats);
         }
 
         private void btnCyprus_Click(object sender, RoutedEventArgs e)
@@ -45,9 +49,9 @@ namespace FinanceHelper
             //dgCapital.Visibility = Visibility.Visible;
         }
 
-        private void PopulateFinanceData(List<FinanceData> financeData, DataGrid dataGrid)
+        private void PopulateFinanceData(List<FinanceData.FinanceDataItem> financeData, DataGrid dataGrid)
         {
-            foreach (FinanceData data in financeData)
+            foreach (FinanceData.FinanceDataItem data in financeData)
             {
                 FinanceDataDisplay item = new FinanceDataDisplay
                 {
@@ -68,6 +72,16 @@ namespace FinanceHelper
             return string.Format("{0:C}", amount);
         }
 
+        private string FormatPercent(decimal percent)
+        {
+            string formattedPercent = string.Format("{0:P2}", percent);
+
+            if (formattedPercent.Length == 6)
+                formattedPercent = "0" + formattedPercent;
+
+            return formattedPercent;
+        }
+
         public class FinanceDataDisplay
         {
             public string Type { get; set; }
@@ -85,26 +99,45 @@ namespace FinanceHelper
             public string Percent { get; set; }
         }
 
-        private void PopulateFinanceStats(List<FinanceData> financeData, DataGrid dataGrid)
+        private void PopulateFinanceStats(FinanceData financeData, DataGrid dataGrid)
         {
-            List<FinanceData> beauty = financeData.Where(finance => finance.Category == FinanceCategory.Beauty).ToList();
+            foreach (FinanceCategory financeCategory in Enum.GetValues(typeof(FinanceCategory)))
+            {
+                if (financeData.CategoryTotalAmount[financeCategory] != 0)
+                {
+                    FinanceStatsDisplay financeCategoryItem = new FinanceStatsDisplay
+                    {
+                        Category = financeCategory.ToString(),
+                        Amount = FormatMoney(financeData.CategoryTotalAmount[financeCategory]),
+                        Percent = FormatPercent((financeData.CategoryTotalAmount[financeCategory] / financeData.TotalAmount))
+                    };
+
+                    dataGrid.Items.Add(financeCategoryItem);
+                }
+            }
+
+            FinanceStatsDisplay totalAmountItem = new FinanceStatsDisplay
+            {
+                Category = "Total Amount",
+                Amount = FormatMoney(financeData.TotalAmount),
+                Percent = String.Empty
+            };
+
+            dataGrid.Items.Add(totalAmountItem);
+        }
+
+        private void PopulateAllStats(DataGrid dataGrid)
+        {
+            FinanceData allData = new FinanceData();
 
             foreach (FinanceCategory financeCategory in Enum.GetValues(typeof(FinanceCategory)))
             {
-                List<FinanceData> financeDataCategory = financeData.Where(finance => finance.Category == financeCategory).ToList();
-
-                if (financeDataCategory.Count > 0)
-                {
-                    FinanceStatsDisplay item = new FinanceStatsDisplay
-                    {
-                        Category = financeCategory.ToString(),
-                        Amount = "$0.00",
-                        Percent = "0%"
-                    };
-
-                    dataGrid.Items.Add(item);
-                }
+                allData.CategoryTotalAmount[financeCategory] += _bankFileLoader.ChaseFinanceData.CategoryTotalAmount[financeCategory];
             }
+
+            allData.TotalAmount += _bankFileLoader.ChaseFinanceData.TotalAmount;
+
+            PopulateFinanceStats(allData, dataGrid);
         }
 
         #region FinanceHeader
