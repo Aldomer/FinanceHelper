@@ -15,19 +15,25 @@ namespace FinanceHelper
     {
         private BankFileLoader _bankFileLoader = new BankFileLoader();
 
+        private BudgetData _budgetData = new BudgetData();
+
         public MainWindow()
         {
             InitializeComponent();
 
+            HideAllDataGrids();
+
+            AddBudgetHeader(dgFinances);
+
             AddFinanceHeader(dgChase);
-
             AddFinanceStatsHeader(dgChaseStats);
-
             AddFinanceStatsHeader(dgAllStats);
         }
 
         private void btnChase_Click(object sender, RoutedEventArgs e)
         {
+            HideAllDataGrids();
+
             dgChase.Visibility = Visibility.Visible;
 
             _bankFileLoader.LoadChase();
@@ -47,6 +53,95 @@ namespace FinanceHelper
         private void btnCapital_Click(object sender, RoutedEventArgs e)
         {
             //dgCapital.Visibility = Visibility.Visible;
+        }
+
+        private void btnFinances_Click(object sender, RoutedEventArgs e)
+        {
+            HideAllDataGrids();
+
+            dgFinances.Visibility = Visibility.Visible;
+
+            _budgetData.CombineCategoryTotalAmount(_bankFileLoader);
+
+            PopulateBudgetData(dgFinances);
+        }
+
+        private void HideAllDataGrids()
+        {
+            dgChase.Visibility = Visibility.Hidden;
+            dgFinances.Visibility = Visibility.Hidden;
+        }
+
+        private void PopulateBudgetData(DataGrid dataGrid)
+        {
+            decimal budgetIncome = 0.00m, budgetExpenses = 0.00m;
+
+            bool isIncome = true;
+
+            foreach (BudgetItem budgetItem in _budgetData.BudgetItemList)
+            {
+                decimal plannedAmount = 0.00m;
+
+                if (budgetItem.Header == "Expenses")
+                    isIncome = false;
+                
+                if (budgetItem.Header.StartsWith("EmptyLine"))
+                    AddBudgetItemToGrid(dataGrid, String.Empty);
+                else if (budgetItem.Header == "Total Income")
+                    AddBudgetItemToGrid(dataGrid, budgetItem.Header, budgetIncome);
+                else if (budgetItem.Header == "Total Expenses")
+                    AddBudgetItemToGrid(dataGrid, budgetItem.Header, budgetExpenses);
+                else if (budgetItem.Header == "Left to Budget")
+                    AddBudgetItemToGrid(dataGrid, budgetItem.Header, budgetIncome - budgetExpenses);
+                else if (budgetItem.Header != String.Empty)
+                    AddBudgetItemToGrid(dataGrid, budgetItem.Header);
+                else
+                    AddBudgetItemToGrid(dataGrid, budgetItem.Category, budgetItem.PlannedAmount, budgetItem.SpentAmount, budgetItem.RemainingAmount);
+
+                if (isIncome)
+                    budgetIncome += budgetItem.PlannedAmount;
+                else
+                    budgetExpenses += budgetItem.PlannedAmount;
+            }
+        }
+
+        private void AddBudgetItemToGrid(DataGrid dataGrid, string header)
+        {
+            BudgetDataDisplay item = new BudgetDataDisplay
+            {
+                Category = header,
+                PlannedAmount = String.Empty,
+                SpentAmount = String.Empty,
+                RemainingAmount = String.Empty
+            };
+
+            dataGrid.Items.Add(item);
+        }
+
+        private void AddBudgetItemToGrid(DataGrid dataGrid, string header, decimal plannedAmount)
+        {
+            BudgetDataDisplay item = new BudgetDataDisplay
+            {
+                Category = header,
+                PlannedAmount = FormatMoney(plannedAmount),
+                SpentAmount = String.Empty,
+                RemainingAmount = String.Empty
+            };
+
+            dataGrid.Items.Add(item);
+        }
+
+        private void AddBudgetItemToGrid(DataGrid dataGrid, FinanceCategory category, decimal plannedAmount, decimal spentAmount = 0, decimal remainingAmount = 0)
+        {
+            BudgetDataDisplay item = new BudgetDataDisplay
+            {
+                Category = category.ToString(),
+                PlannedAmount = FormatMoney(plannedAmount),
+                SpentAmount = FormatMoney(spentAmount),
+                RemainingAmount = FormatMoney(remainingAmount)
+            };
+
+            dataGrid.Items.Add(item);
         }
 
         private void PopulateFinanceData(List<FinanceData.FinanceDataItem> financeData, DataGrid dataGrid)
@@ -80,6 +175,14 @@ namespace FinanceHelper
                 formattedPercent = "0" + formattedPercent;
 
             return formattedPercent;
+        }
+
+        public class BudgetDataDisplay
+        {
+            public string Category { get; set; }
+            public string PlannedAmount { get; set; }
+            public string SpentAmount { get; set; }
+            public string RemainingAmount { get; set; }
         }
 
         public class FinanceDataDisplay
@@ -141,6 +244,33 @@ namespace FinanceHelper
         }
 
         #region FinanceHeader
+        private void AddBudgetHeader(DataGrid dataGrid)
+        {
+            DataGridTextColumn dgTextColumnCategory = new DataGridTextColumn();
+            dgTextColumnCategory.Header = "Category";
+            dgTextColumnCategory.Width = 100;
+            dgTextColumnCategory.Binding = new Binding("Category");
+            dataGrid.Columns.Add(dgTextColumnCategory);
+
+            DataGridTextColumn dgTextColumnPlannedAmount = new DataGridTextColumn();
+            dgTextColumnPlannedAmount.Header = "Planned Amount";
+            dgTextColumnPlannedAmount.Width = 100;
+            dgTextColumnPlannedAmount.Binding = new Binding("PlannedAmount");
+            dataGrid.Columns.Add(dgTextColumnPlannedAmount);
+
+            DataGridTextColumn dgTextColumnSpentAmount = new DataGridTextColumn();
+            dgTextColumnSpentAmount.Header = "Spent Amount";
+            dgTextColumnSpentAmount.Width = 100;
+            dgTextColumnSpentAmount.Binding = new Binding("SpentAmount");
+            dataGrid.Columns.Add(dgTextColumnSpentAmount);
+
+            DataGridTextColumn dgTextColumnRemainingAmount = new DataGridTextColumn();
+            dgTextColumnRemainingAmount.Header = "Remaining Amount";
+            dgTextColumnRemainingAmount.Width = 100;
+            dgTextColumnRemainingAmount.Binding = new Binding("RemainingAmount");
+            dataGrid.Columns.Add(dgTextColumnRemainingAmount);
+        }
+
         private void AddFinanceHeader(DataGrid dataGrid)
         {
             DataGridTextColumn dgTextColumnType = new DataGridTextColumn();
@@ -184,7 +314,7 @@ namespace FinanceHelper
         {
             DataGridTextColumn dgTextColumnCategory = new DataGridTextColumn();
             dgTextColumnCategory.Header = "Category";
-            dgTextColumnCategory.Width = 100;
+            dgTextColumnCategory.Width = 200;
             dgTextColumnCategory.Binding = new Binding("Category");
             dataGrid.Columns.Add(dgTextColumnCategory);
 

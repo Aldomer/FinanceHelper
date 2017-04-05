@@ -100,22 +100,35 @@ namespace FinanceHelper.Classes
     {
         NoMatch,
         Beauty,
+        BluffdaleCity,
         Car,
         City,
         Clothing,
         Crafts,
         Dmv,
+        EmergencyFund,
         Entertainment,
+        FastOfferings,
         Food,
         Gas,
         Hoa,
         Insurance,
         Interest,
+        Internet,
         LetsPlayMusic,
+        Mortgage,
         NaturalGas,
         Payment,
+        Phone,
+        Power,
         Sewer,
         Streaming,
-        Television
+        Television,
+        Tithing,
+
+        IDS,
+        ChildSupport,
+        BeachBody,
+        MiscellaneousIncome
     }
 }

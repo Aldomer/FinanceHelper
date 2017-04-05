@@ -15,6 +15,26 @@ namespace FinanceHelper.Classes
             }
         }
 
+        private FinanceData _cyprusFinanceData = new FinanceData();
+
+        internal FinanceData CyprusFinanceData
+        {
+            get
+            {
+                return _cyprusFinanceData;
+            }
+        }
+
+        private FinanceData _capitalFinanceData = new FinanceData();
+
+        internal FinanceData CapitalFinanceData
+        {
+            get
+            {
+                return _capitalFinanceData;
+            }
+        }
+
         private FinanceData _chaseFinanceData = new FinanceData();
 
         internal enum Banks

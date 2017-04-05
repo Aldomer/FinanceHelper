@@ -64,6 +64,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Classes\BankFileLoader.cs" />
+    <Compile Include="Classes\BudgetData.cs" />
     <Compile Include="Classes\EnumHelper.cs" />
     <Compile Include="Classes\FinanceData.cs" />
     <Compile Include="MainWindow.xaml.cs">
