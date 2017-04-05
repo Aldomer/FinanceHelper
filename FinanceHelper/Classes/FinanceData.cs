@@ -50,7 +50,7 @@ namespace FinanceHelper.Classes
                 if (description.Contains("beauty"))
                     Category = FinanceCategory.Beauty;
                 else if (description.Contains("burt brothers"))
-                    Category = FinanceCategory.Car;
+                    Category = FinanceCategory.CarMaintenance;
                 else if (description.Contains("bluffdale city"))
                     Category = FinanceCategory.City;
                 else if (description.Contains("carter's") || description.Contains("motherhood") || description.Contains("target"))
@@ -101,7 +101,9 @@ namespace FinanceHelper.Classes
         NoMatch,
         Beauty,
         BluffdaleCity,
-        Car,
+        CarMaintenance,
+        CarPayment,
+        CarReplacement,
         City,
         Clothing,
         Crafts,
