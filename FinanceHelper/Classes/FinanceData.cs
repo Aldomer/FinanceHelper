@@ -45,52 +45,105 @@ namespace FinanceHelper.Classes
 
             Dictionary<string, FinanceCategory> DescriptionToCategory = new Dictionary<string, FinanceCategory>
             {
-                { "beauty", FinanceCategory.Beauty }
+                { "ach check", FinanceCategory.Check },
+                { "amazon", FinanceCategory.Entertainment },
+                { "amzn", FinanceCategory.Entertainment },
+                { "artic circle", FinanceCategory.Food },
+                { "astro burger", FinanceCategory.Food },
+                { "atm fee", FinanceCategory.Withdrawal },
+                { "atm withdrawal", FinanceCategory.Withdrawal },
+                { "beans and brew", FinanceCategory.Food },
+                { "beans &amp; brew", FinanceCategory.Food },
+                { "beauty", FinanceCategory.Beauty },
+                { "bestbuy", FinanceCategory.Entertainment },
+                { "best buy", FinanceCategory.Entertainment },
+                { "burt brothers", FinanceCategory.CarMaintenance },
+                { "bluffdale city", FinanceCategory.City },
+                { "cafe rio", FinanceCategory.Food },
+                { "capital one", FinanceCategory.MoneyTransfer },
+                { "carter's", FinanceCategory.Clothing },
+                { "chevron", FinanceCategory.Gas },
+                { "chick-fil-a", FinanceCategory.Food },
+                { "child support", FinanceCategory.ChildSupport },
+                { "cookie cutters haircuts", FinanceCategory.Haircut },
+                { "costco", FinanceCategory.Food },
+                { "crown burger", FinanceCategory.Food },
+                { "cvs/pharmacy", FinanceCategory.Medical },
+                { "deseret book", FinanceCategory.Entertainment },
+                { "dish ntwk", FinanceCategory.Television },
+                { "dividend credit", FinanceCategory.Interest },
+                { "dmv", FinanceCategory.Dmv },
+                { "driver lic renewal", FinanceCategory.Dmv },
+                { "dollar tree", FinanceCategory.Crafts },
+                { "domino's", FinanceCategory.Food },
+                { "einstein bros bagels", FinanceCategory.Food },
+                { "exxonmobil", FinanceCategory.Gas },
+                { "fotofly", FinanceCategory.Pictures },
+                { "funds transfer", FinanceCategory.MoneyTransfer },
+                { "granger medical clinic", FinanceCategory.Medical },
+                { "great clips", FinanceCategory.Haircut },
+                { "harmons", FinanceCategory.Food },
+                { "humblebundl", FinanceCategory.Entertainment },
+                { "itunes", FinanceCategory.Entertainment },
+                { "john rowley", FinanceCategory.Food },
+                { "kay jewelers", FinanceCategory.Clothing },
+                { "kindle", FinanceCategory.Entertainment },
+                { "kneaders", FinanceCategory.Food },
+                { "gymboree", FinanceCategory.Entertainment },
+                { "hallmark", FinanceCategory.Entertainment },
+                { "hobby lobby", FinanceCategory.Crafts },
+                { "hoffman &amp; co", FinanceCategory.Taxes },
+                { "hulu", FinanceCategory.Streaming },
+                { "iceberg", FinanceCategory.Food },
+                { "interest", FinanceCategory.Interest },
+                { "jo-ann", FinanceCategory.Crafts },
+                { "lahacienda", FinanceCategory.Food },
+                { "let's play music", FinanceCategory.LetsPlayMusic },
+                { "lds church", FinanceCategory.Tithing },
+                { "maverik", FinanceCategory.Gas },
+                { "mcdonald's", FinanceCategory.Food },
+                { "megaplex", FinanceCategory.Entertainment },
+                { "motherhood", FinanceCategory.Clothing },
+                { "netflix", FinanceCategory.Streaming },
+                { "nothing bundt cake", FinanceCategory.Food },
+                { "old navy", FinanceCategory.Clothing },
+                { "office max", FinanceCategory.Entertainment },
+                { "papa murphy's", FinanceCategory.Food },
+                { "parryfarmsh", FinanceCategory.Hoa },
+                { "payment", FinanceCategory.Payment },
+                { "pei wei", FinanceCategory.Food },
+                { "peterson's", FinanceCategory.Food },
+                { "pretzelm", FinanceCategory.Food },
+                { "questar", FinanceCategory.NaturalGas },
+                { "red robin", FinanceCategory.Food },
+                { "reynolds and rey", FinanceCategory.IDS },
+                { "s1 savings bank", FinanceCategory.Insurance },
+                { "safeco", FinanceCategory.Insurance },
+                { "salt lake library", FinanceCategory.Entertainment },
+                { "south valley sewer", FinanceCategory.Sewer },
+                { "share draft", FinanceCategory.Check },
+                { "smiths", FinanceCategory.Food },
+                { "starbucks", FinanceCategory.Food },
+                { "subway", FinanceCategory.Food },
+                { "tacotime", FinanceCategory.Food },
+                { "target", FinanceCategory.Clothing },
+                { "team beachbody", FinanceCategory.BeachBody },
+                { "u-swirl", FinanceCategory.Food },
+                { "usps", FinanceCategory.Mail },
+                { "utahtaxrfd", FinanceCategory.TaxRefund },
+                { "vzwrlss", FinanceCategory.Phone },
+                { "wal-mart", FinanceCategory.Food },
+                { "wendys", FinanceCategory.Food },
+                { "white elegance", FinanceCategory.Clothing },
+                { "winco", FinanceCategory.Food },
+                { "wm supercenter", FinanceCategory.Food },
+                { "wood creations", FinanceCategory.Crafts },
             };
 
 
             internal void SetCategory()
             {
                 string description = Description.ToLower();
-
-                if (description.Contains("beauty"))
-                    Category = FinanceCategory.Beauty;
-                else if (description.Contains("burt brothers"))
-                    Category = FinanceCategory.CarMaintenance;
-                else if (description.Contains("bluffdale city"))
-                    Category = FinanceCategory.City;
-                else if (description.Contains("carter's") || description.Contains("motherhood") || description.Contains("target"))
-                    Category = FinanceCategory.Clothing;
-                else if (description.Contains("hobby lobby") || description.Contains("dollar tree"))
-                    Category = FinanceCategory.Crafts;
-                else if (description.Contains("dmv") || description.Contains("driver lic renewal"))
-                    Category = FinanceCategory.Dmv;
-                else if (description.Contains("kindle") || description.Contains("amazon") || description.Contains("megaplex") || description.Contains("itunes") || description.Contains("bestbuy") || description.Contains("humblebundl") || description.Contains("salt lake library"))
-                    Category = FinanceCategory.Entertainment;
-                else if (description.Contains("harmons") || description.Contains("costco") || description.Contains("wendys") || description.Contains("wm supercenter") || description.Contains("astro burger") || description.Contains("red robin") || description.Contains("domino's") || description.Contains("beans and brew") || description.Contains("cafe rio") || description.Contains("einstein bros bagels") || description.Contains("chick-fil-a") || description.Contains("pretzelm") || description.Contains("kneaders") || description.Contains("smiths") || description.Contains("papa murphy's"))
-                    Category = FinanceCategory.Food;
-                else if (description.Contains("maverik"))
-                    Category = FinanceCategory.Gas;
-                else if (description.Contains("parryfarmsh"))
-                    Category = FinanceCategory.Hoa;
-                else if (description.Contains("safeco"))
-                    Category = FinanceCategory.Insurance;
-                else if (description.Contains("interest"))
-                    Category = FinanceCategory.Interest;
-                else if (description.Contains("let's play music"))
-                    Category = FinanceCategory.LetsPlayMusic;
-                else if (description.Contains("questar"))
-                    Category = FinanceCategory.NaturalGas;
-                else if (description.Contains("payment"))
-                    Category = FinanceCategory.Payment;
-                else if (description.Contains("south valley sewer"))
-                    Category = FinanceCategory.Sewer;
-                else if (description.Contains("hulu") || description.Contains("netflix"))
-                    Category = FinanceCategory.Streaming;
-                else if (description.Contains("dish ntwk"))
-                    Category = FinanceCategory.Television;
-
-                FinanceCategory test;
 
                 var match = DescriptionToCategory.Where(DescriptionToCategory => description.Contains(DescriptionToCategory.Key)).ToList();
                 if (match.Count > 0)
@@ -122,6 +175,7 @@ namespace FinanceHelper.Classes
         CarMaintenance,
         CarPayment,
         CarReplacement,
+        Check,
         City,
         Clothing,
         Crafts,
@@ -131,20 +185,28 @@ namespace FinanceHelper.Classes
         FastOfferings,
         Food,
         Gas,
+        Haircut,
         Hoa,
         Insurance,
         Interest,
         Internet,
         LetsPlayMusic,
+        Mail,
+        Medical,
+        MoneyTransfer,
         Mortgage,
         NaturalGas,
         Payment,
         Phone,
+        Pictures,
         Power,
         Sewer,
         Streaming,
+        Taxes,
+        TaxRefund,
         Television,
         Tithing,
+        Withdrawal,
 
         IDS,
         ChildSupport,

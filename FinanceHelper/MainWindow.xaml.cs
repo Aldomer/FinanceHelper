@@ -74,9 +74,9 @@ namespace FinanceHelper
 
                 PopulateFinanceData(_bankFileLoader.CyprusFinanceData.FinanceDataList, dgCyprus);
 
-                //PopulateFinanceStats(_bankFileLoader.ChaseFinanceData, dgChaseStats);
+                PopulateFinanceStats(_bankFileLoader.CyprusFinanceData, dgCyprusStats);
 
-                //PopulateAllStats(dgAllStats);
+                PopulateAllStats(dgAllStats);
 
                 _cyprusLoaded = true;
             }
@@ -187,6 +187,8 @@ namespace FinanceHelper
         {
             foreach (FinanceData.FinanceDataItem data in financeData)
             {
+                //if (data.Category == FinanceCategory.NoMatch)
+                //{ 
                 FinanceDataDisplay item = new FinanceDataDisplay
                 {
                     Type = data.Type.ToString(),
@@ -198,6 +200,7 @@ namespace FinanceHelper
                 };
 
                 dataGrid.Items.Add(item);
+                //}
             }
         }
 
