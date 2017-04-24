@@ -84,7 +84,23 @@ namespace FinanceHelper
 
         private void btnCapital_Click(object sender, RoutedEventArgs e)
         {
-            //dgCapital.Visibility = Visibility.Visible;
+            HideAllDataGrids();
+
+            dgCapital.Visibility = Visibility.Visible;
+            dgCapitalStats.Visibility = Visibility.Visible;
+
+            if (!_capitalLoaded)
+            {
+                _bankFileLoader.LoadCapital();
+
+                //PopulateFinanceData(_bankFileLoader.CapitalFinanceData.FinanceDataList, dgCapital);
+
+                //PopulateFinanceStats(_bankFileLoader.CapitalFinanceData, dgCapitalStats);
+
+                //PopulateAllStats(dgAllStats);
+
+                //_capitalLoaded = true;
+            }
         }
 
         private void btnFinances_Click(object sender, RoutedEventArgs e)
