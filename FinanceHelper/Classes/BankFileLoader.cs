@@ -66,6 +66,7 @@ namespace FinanceHelper.Classes
                             PopulateChaseData(workSheet);
                             break;
                         case Banks.Cyprus:
+                            PopulateCyprusData(workSheet);
                             break;
                     }
                 }
@@ -81,9 +82,6 @@ namespace FinanceHelper.Classes
         }
 
         #region Chase
-
-        private bool _chaseLoaded;
-
         internal void LoadChase()
         {
             Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog
@@ -100,11 +98,33 @@ namespace FinanceHelper.Classes
 
                 DisplayWaitCursor();
 
-                ResetChaseInformationLoaded();
-
                 bool fileDataLoaded = LoadFileData(fileName, Banks.Chase);
 
                 PopulateFinanceData();
+
+                DisplayRegularCursor();
+            }
+        }
+
+        internal void LoadCyprus()
+        {
+            Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog
+            {
+                DefaultExt = ".csv",
+                Filter = "CSV files (*.csv)|*.csv"
+            };
+
+            bool? result = fileDialog.ShowDialog();
+
+            if (result != null && (bool)result)
+            {
+                string fileName = fileDialog.FileName;
+
+                DisplayWaitCursor();
+
+                bool fileDataLoaded = LoadFileData(fileName, Banks.Cyprus);
+
+                //PopulateFinanceData();
 
                 DisplayRegularCursor();
             }
@@ -118,11 +138,6 @@ namespace FinanceHelper.Classes
         private void DisplayRegularCursor()
         {
             Mouse.OverrideCursor = null;
-        }
-
-        private void ResetChaseInformationLoaded()
-        {
-            _chaseLoaded = false;
         }
 
         private void PopulateChaseData(Excel.Worksheet workSheet)
@@ -157,19 +172,13 @@ namespace FinanceHelper.Classes
                             financeData.TransDate = transDate;
                             break;
                         case 3: // Post Date
-                            double excellPostDate = double.Parse(columnValue);
-                            DateTime postDate = DateTime.FromOADate(excellPostDate);
-
-                            financeData.PostDate = postDate;
+                            SetPostDate(columnValue, financeData);
                             break;
                         case 4: // Description
-                            financeData.Description = columnValue;
+                            SetDescription(columnValue, financeData);
                             break;
                         case 5: // Amount
-                            decimal excellAmount;
-                            Decimal.TryParse(columnValue, out excellAmount);
-
-                            financeData.Amount = excellAmount;
+                            SetAmount(columnValue, financeData);
                             break;
                     }
 
@@ -178,6 +187,81 @@ namespace FinanceHelper.Classes
 
                 financeData.SetCategory();
                 _chaseFinanceData.AddFinanceDataItem(financeData);
+            }
+        }
+
+        private void SetPostDate(string columnValue, FinanceData.FinanceDataItem financeData)
+        {
+            double excellTransDate = double.Parse(columnValue);
+            DateTime postDate = DateTime.FromOADate(excellTransDate);
+
+            financeData.PostDate = postDate;
+        }
+
+        private void SetDescription(string columnValue, FinanceData.FinanceDataItem financeData)
+        {
+            financeData.Description = columnValue;
+        }
+
+        private void SetAmount(string columnValue, FinanceData.FinanceDataItem financeData)
+        {
+            decimal excellAmount;
+            Decimal.TryParse(columnValue, out excellAmount);
+
+            financeData.Amount = excellAmount;
+        }
+
+        private void PopulateCyprusData(Excel.Worksheet workSheet)
+        {
+            bool readData = false;
+
+            foreach (Excel.Range row in workSheet.UsedRange.Rows)
+            {
+                int whichColumn = 1;
+
+                if (!readData) // Skipping the first row which is just the column headers
+                {
+                    readData = true;
+                    continue;
+                }
+
+                FinanceData.FinanceDataItem financeData = new FinanceData.FinanceDataItem();
+
+                foreach (Excel.Range column in row.Columns)
+                {
+                    string columnValue = (column.Value2 != null) ? column.Value2.ToString() : String.Empty;
+
+                    switch (whichColumn)
+                    {
+                        case 1: //Account Number
+                            break;
+                        case 2: //Post Date
+                            SetPostDate(columnValue, financeData);
+                            break;
+                        case 3: //Check Number
+                            break;
+                        case 4: // Description
+                            SetDescription(columnValue, financeData);
+                            break;
+                        case 5: // Debit
+                            if (columnValue.Trim() != String.Empty)
+                                SetAmount("-" + columnValue, financeData);
+                            break;
+                        case 6: // Credit
+                            if (columnValue.Trim() != String.Empty)
+                                SetAmount(columnValue, financeData);
+                            break;
+                        case 7: // Status
+                            break;
+                        case 8: // Balance
+                            break;
+                    }
+
+                    whichColumn++;
+                }
+
+                financeData.SetCategory();
+                _cyprusFinanceData.AddFinanceDataItem(financeData);
             }
         }
 

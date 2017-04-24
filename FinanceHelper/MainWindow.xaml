@@ -5,15 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FinanceHelper"
         mc:Ignorable="d"
-        Title="Finance Helper" Height="1000" Width="1500">
+        Title="Finance Helper" Height="1000" Width="1742">
     <Grid>
         <DataGrid x:Name="dgChase" HorizontalAlignment="Left" VerticalAlignment="Top" Height="950" Width="825" AutoGenerateColumns="False" Margin="261,10,0,0" Visibility="Visible"/>
+        <DataGrid x:Name="dgCyprus" HorizontalAlignment="Left" VerticalAlignment="Top" Height="950" Width="825" AutoGenerateColumns="False" Margin="261,10,0,0" Visibility="Visible"/>
+        <DataGrid x:Name="dgCapital" HorizontalAlignment="Left" VerticalAlignment="Top" Height="950" Width="825" AutoGenerateColumns="False" Margin="261,10,0,0" Visibility="Visible"/>
         <Button x:Name="btnChase" Content="Chase" HorizontalAlignment="Left" Height="50" Margin="9,68,0,0" VerticalAlignment="Top" Width="242" Click="btnChase_Click"/>
         <Button x:Name="btnCyprus" Content="Cyprus" HorizontalAlignment="Left" Height="50" Margin="9,123,0,0" VerticalAlignment="Top" Width="242" Click="btnCyprus_Click"/>
         <Button x:Name="btnCapital" Content="Capital" HorizontalAlignment="Left" Height="50" Margin="9,178,0,0" VerticalAlignment="Top" Width="242" Click="btnCapital_Click"/>
-        <DataGrid x:Name="dgChaseStats" HorizontalAlignment="Left" Height="470" Margin="1102,10,0,0" VerticalAlignment="Top" Width="371"/>
-        <DataGrid x:Name="dgAllStats" HorizontalAlignment="Left" Height="450" Margin="1102,510,0,0" VerticalAlignment="Top" Width="371"/>
-        <Label x:Name="label" Content="All" HorizontalAlignment="Left" Height="25" Margin="1102,485,0,0" VerticalAlignment="Top" Width="371" Background="#FF6C6C6C" FontWeight="Bold" HorizontalContentAlignment="Center"/>
+        <DataGrid x:Name="dgChaseStats" HorizontalAlignment="Left" Height="470" Margin="1102,10,0,0" VerticalAlignment="Top" Width="408"/>
+        <DataGrid x:Name="dgCyprusStats" HorizontalAlignment="Left" Height="470" Margin="1102,10,0,0" VerticalAlignment="Top" Width="408"/>
+        <DataGrid x:Name="dgCapitalStats" HorizontalAlignment="Left" Height="470" Margin="1102,10,0,0" VerticalAlignment="Top" Width="408"/>
+        <DataGrid x:Name="dgAllStats" HorizontalAlignment="Left" Height="450" Margin="1102,510,0,0" VerticalAlignment="Top" Width="408"/>
+        <Label x:Name="label" Content="All" HorizontalAlignment="Left" Height="25" Margin="1102,485,0,0" VerticalAlignment="Top" Width="408" Background="#FF6C6C6C" FontWeight="Bold" HorizontalContentAlignment="Center"/>
         <Button x:Name="btnFinances" Content="Finances" HorizontalAlignment="Left" Height="50" Margin="9,13,0,0" VerticalAlignment="Top" Width="242" Click="btnFinances_Click"/>
         <DataGrid x:Name="dgFinances" HorizontalAlignment="Left" VerticalAlignment="Top" Height="950" Width="825" AutoGenerateColumns="False" Margin="261,10,0,0" Visibility="Hidden"/>
     </Grid>

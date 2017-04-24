@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FinanceHelper.Classes
 {
@@ -42,6 +43,11 @@ namespace FinanceHelper.Classes
             internal FinanceType Type;
             internal FinanceCategory Category;
 
+            Dictionary<string, FinanceCategory> DescriptionToCategory = new Dictionary<string, FinanceCategory>
+            {
+                { "beauty", FinanceCategory.Beauty }
+            };
+
 
             internal void SetCategory()
             {
@@ -83,6 +89,18 @@ namespace FinanceHelper.Classes
                     Category = FinanceCategory.Streaming;
                 else if (description.Contains("dish ntwk"))
                     Category = FinanceCategory.Television;
+
+                FinanceCategory test;
+
+                var match = DescriptionToCategory.Where(DescriptionToCategory => description.Contains(DescriptionToCategory.Key)).ToList();
+                if (match.Count > 0)
+                {
+                    string financeCategoryString = match[0].Value.ToString();
+
+                    FinanceCategory category;
+                    Enum.TryParse(financeCategoryString, out category);
+                    Category = category;
+                }
             }
         }
     }

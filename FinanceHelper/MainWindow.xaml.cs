@@ -17,6 +17,10 @@ namespace FinanceHelper
 
         private BudgetData _budgetData = new BudgetData();
 
+        private bool _chaseLoaded = false;
+        private bool _cyprusLoaded = false;
+        private bool _capitalLoaded = false;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -26,7 +30,13 @@ namespace FinanceHelper
             AddBudgetHeader(dgFinances);
 
             AddFinanceHeader(dgChase);
+            AddFinanceHeader(dgCyprus);
+            AddFinanceHeader(dgCapital);
+
             AddFinanceStatsHeader(dgChaseStats);
+            AddFinanceStatsHeader(dgCyprusStats);
+            AddFinanceStatsHeader(dgCapitalStats);
+
             AddFinanceStatsHeader(dgAllStats);
         }
 
@@ -35,19 +45,41 @@ namespace FinanceHelper
             HideAllDataGrids();
 
             dgChase.Visibility = Visibility.Visible;
+            dgChaseStats.Visibility = Visibility.Visible;
 
-            _bankFileLoader.LoadChase();
+            if (!_chaseLoaded)
+            {
+                _bankFileLoader.LoadChase();
 
-            PopulateFinanceData(_bankFileLoader.ChaseFinanceData.FinanceDataList, dgChase);
+                PopulateFinanceData(_bankFileLoader.ChaseFinanceData.FinanceDataList, dgChase);
 
-            PopulateFinanceStats(_bankFileLoader.ChaseFinanceData, dgChaseStats);
+                PopulateFinanceStats(_bankFileLoader.ChaseFinanceData, dgChaseStats);
 
-            PopulateAllStats(dgAllStats);
+                PopulateAllStats(dgAllStats);
+
+                _chaseLoaded = true;
+            }
         }
 
         private void btnCyprus_Click(object sender, RoutedEventArgs e)
         {
-            //dgCyprus.Visibility = Visibility.Visible;
+            HideAllDataGrids();
+
+            dgCyprus.Visibility = Visibility.Visible;
+            dgCyprusStats.Visibility = Visibility.Visible;
+
+            if (!_cyprusLoaded)
+            {
+                _bankFileLoader.LoadCyprus();
+
+                PopulateFinanceData(_bankFileLoader.CyprusFinanceData.FinanceDataList, dgCyprus);
+
+                //PopulateFinanceStats(_bankFileLoader.ChaseFinanceData, dgChaseStats);
+
+                //PopulateAllStats(dgAllStats);
+
+                _cyprusLoaded = true;
+            }
         }
 
         private void btnCapital_Click(object sender, RoutedEventArgs e)
@@ -69,6 +101,13 @@ namespace FinanceHelper
         private void HideAllDataGrids()
         {
             dgChase.Visibility = Visibility.Hidden;
+            dgCyprus.Visibility = Visibility.Hidden;
+            dgCapital.Visibility = Visibility.Hidden;
+
+            dgChaseStats.Visibility = Visibility.Hidden;
+            dgCyprusStats.Visibility = Visibility.Hidden;
+            dgCapitalStats.Visibility = Visibility.Hidden;
+
             dgFinances.Visibility = Visibility.Hidden;
         }
 
