@@ -91,7 +91,7 @@ namespace FinanceHelper
 
             if (!_capitalLoaded)
             {
-                _bankFileLoader.LoadCapital();
+                //_bankFileLoader.LoadCapital();
 
                 //PopulateFinanceData(_bankFileLoader.CapitalFinanceData.FinanceDataList, dgCapital);
 

@@ -32,6 +32,13 @@ namespace FinanceHelper.Classes
             foreach(FinanceCategory financeCategory in CategoryTotalAmount.Keys)
             {
                 CombinedCategoryTotalAmount[financeCategory] += CategoryTotalAmount[financeCategory];
+
+                List<BudgetItem> searchResults = BudgetItemList.Where(sf => sf.Category == financeCategory).ToList();
+                if (searchResults.Count > 0 && financeCategory != FinanceCategory.NoMatch) //TODO Need to handle NoMatch later since Headers also have a category of NoMatch
+                { //TODO Also need to clean up FinanceCategory enum (Ex BluffdaleCity and City exist)
+                    BudgetItem budgetItem = searchResults[0];
+                    budgetItem.SpentAmount += CategoryTotalAmount[financeCategory];
+                }
             }
         }
 
