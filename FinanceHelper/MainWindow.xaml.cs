@@ -140,11 +140,11 @@ namespace FinanceHelper
                 if (budgetItem.Header == "Expenses")
                     isIncome = false;
                 
-                if (budgetItem.Header.StartsWith("EmptyLine"))
+                if (budgetItem.Group == BudgetGroup.EmptyLine)
                     AddBudgetItemToGrid(dataGrid, String.Empty);
-                else if (budgetItem.Header == "Total Income")
+                else if (budgetItem.Group == BudgetGroup.TotalIncome)
                     AddBudgetItemToGrid(dataGrid, budgetItem.Header, budgetIncome);
-                else if (budgetItem.Header == "Total Expenses")
+                else if (budgetItem.Group == BudgetGroup.TotalExpenses)
                     AddBudgetItemToGrid(dataGrid, budgetItem.Header, budgetExpenses);
                 else if (budgetItem.Header == "Left to Budget")
                     AddBudgetItemToGrid(dataGrid, budgetItem.Header, budgetIncome - budgetExpenses);

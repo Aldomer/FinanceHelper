@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FinanceHelper.Classes
 {
@@ -67,24 +65,59 @@ namespace FinanceHelper.Classes
 
         internal void InitializeBudgetItemList()
         {
+            AddBudgetItem(BudgetGroup.Label, "Income");
+            AddIncome();
+            
+            AddBudgetItem(BudgetGroup.Label, "Expenses");
+            AddGiving();
+            AddSavings();
+            AddHousing();
+            AddTransportation();
+            AddGroceriesandEatingOut();
+            AddLifestyle();
+            AddStreaming();
+            AddInsuranceAndTax();
+            AddDebt();
+            AddOtherExpenses();
+            AddTotalExpense();
+        }
+
+        private void AddIncome()
+        {
             BudgetGroup budgetGroup = BudgetGroup.TotalIncome;
 
-            AddBudgetItem(budgetGroup, "Income");
             AddBudgetItem(FinanceCategory.IDS, budgetGroup, 6047.48m);
             AddBudgetItem(FinanceCategory.ChildSupport, budgetGroup, 198.00m);
-            AddBudgetItem(budgetGroup, "Total Income");
-            AddBudgetItem(budgetGroup, "EmptyLine1");
-            AddBudgetItem(budgetGroup, "Expenses");
-            AddBudgetItem(budgetGroup, "Giving");
+            AddBudgetItem(BudgetGroup.Label, "Total Income");
+            AddBudgetItem(BudgetGroup.EmptyLine, "EmptyLine1");
+        }
+
+        private void AddGiving()
+        {
+            BudgetGroup budgetGroup = BudgetGroup.Giving;
+
+            AddBudgetItem(BudgetGroup.Label, "Giving");
             AddBudgetItem(FinanceCategory.Tithing, budgetGroup, 912.12m);
             AddBudgetItem(FinanceCategory.FastOfferings, budgetGroup, 40.00m);
-            AddBudgetItem(budgetGroup, "Total");
-            AddBudgetItem(budgetGroup, "EmptyLine1");
-            AddBudgetItem(budgetGroup, "Savings");
+            AddBudgetItem(BudgetGroup.Label, "Total");
+            AddBudgetItem(BudgetGroup.EmptyLine, "EmptyLine1");
+        }
+
+        private void AddSavings()
+        {
+            BudgetGroup budgetGroup = BudgetGroup.Savings;
+
+            AddBudgetItem(BudgetGroup.Label, "Savings");
             AddBudgetItem(FinanceCategory.EmergencyFund, budgetGroup, 100.00m);
-            AddBudgetItem(budgetGroup, "Total");
-            AddBudgetItem(budgetGroup, "EmptyLine1");
-            AddBudgetItem(budgetGroup, "Housing");
+            AddBudgetItem(BudgetGroup.Label, "Total");
+            AddBudgetItem(BudgetGroup.EmptyLine, "EmptyLine1");
+        }
+
+        private void AddHousing()
+        {
+            BudgetGroup budgetGroup = BudgetGroup.Housing;
+
+            AddBudgetItem(BudgetGroup.Label, "Housing");
             AddBudgetItem(FinanceCategory.Mortgage, budgetGroup, 2152.04m);
             AddBudgetItem(FinanceCategory.HomeImprovement, budgetGroup, 75.00m);
             AddBudgetItem(FinanceCategory.Hoa, budgetGroup, 10.00m);
@@ -93,22 +126,40 @@ namespace FinanceHelper.Classes
             AddBudgetItem(FinanceCategory.Power, budgetGroup, 140.00m);
             AddBudgetItem(FinanceCategory.Phone, budgetGroup, 165.00m);
             AddBudgetItem(FinanceCategory.Television, budgetGroup, 88.31m);
-            AddBudgetItem(FinanceCategory.BluffdaleCity, budgetGroup, 50.00m);
+            AddBudgetItem(FinanceCategory.City, budgetGroup, 50.00m);
             AddBudgetItem(FinanceCategory.Internet, budgetGroup, 58.00m);
-            AddBudgetItem(budgetGroup, "Total");
-            AddBudgetItem(budgetGroup, "EmptyLine1");
-            AddBudgetItem(budgetGroup, "Transportation");
+            AddBudgetItem(BudgetGroup.Label, "Total");
+            AddBudgetItem(BudgetGroup.EmptyLine, "EmptyLine1");
+        }
+
+        private void AddTransportation()
+        {
+            BudgetGroup budgetGroup = BudgetGroup.Transportation;
+
+            AddBudgetItem(BudgetGroup.Label, "Transportation");
             AddBudgetItem(FinanceCategory.Gas, budgetGroup, 180.00m);
             AddBudgetItem(FinanceCategory.CarMaintenance, budgetGroup, 20.00m);
             AddBudgetItem(FinanceCategory.CarPayment, budgetGroup, 660.00m);
-            AddBudgetItem(budgetGroup, "Total");
-            AddBudgetItem(budgetGroup, "EmptyLine1");
-            AddBudgetItem(budgetGroup, "Groceries and Eating Out");
+            AddBudgetItem(BudgetGroup.Label, "Total");
+            AddBudgetItem(BudgetGroup.EmptyLine, "EmptyLine1");
+        }
+
+        private void AddGroceriesandEatingOut()
+        {
+            BudgetGroup budgetGroup = BudgetGroup.GroceriesAndEatingOut;
+
+            AddBudgetItem(BudgetGroup.Label, "Groceries and Eating Out");
             AddBudgetItem(FinanceCategory.Groceries, budgetGroup, 370.00m);
             AddBudgetItem(FinanceCategory.EatingOut, budgetGroup, 100.00m);
-            AddBudgetItem(budgetGroup, "Total");
-            AddBudgetItem(budgetGroup, "EmptyLine1");
-            AddBudgetItem(budgetGroup, "Lifestyle");
+            AddBudgetItem(BudgetGroup.Label, "Total");
+            AddBudgetItem(BudgetGroup.EmptyLine, "EmptyLine1");
+        }
+
+        private void AddLifestyle()
+        {
+            BudgetGroup budgetGroup = BudgetGroup.Lifestyle;
+
+            AddBudgetItem(BudgetGroup.Label, "Lifestyle");
             AddBudgetItem(FinanceCategory.PetCare, budgetGroup, 25.00m);
             AddBudgetItem(FinanceCategory.Clothing, budgetGroup, 20.00m);
             AddBudgetItem(FinanceCategory.Entertainment, budgetGroup, 60.00m);
@@ -123,24 +174,58 @@ namespace FinanceHelper.Classes
             AddBudgetItem(FinanceCategory.PaigeSavings, budgetGroup, 20.00m);
             AddBudgetItem(FinanceCategory.Baby4Savings, budgetGroup, 20.00m);
             AddBudgetItem(FinanceCategory.Vacation, budgetGroup, 100.00m);
-            AddBudgetItem(budgetGroup, "Total");
-            AddBudgetItem(budgetGroup, "EmptyLine1");
-            AddBudgetItem(budgetGroup, "Streaming");
+            AddBudgetItem(BudgetGroup.Label, "Total");
+            AddBudgetItem(BudgetGroup.EmptyLine, "EmptyLine1");
+        }
+
+        private void AddStreaming()
+        {
+            BudgetGroup budgetGroup = BudgetGroup.Streaming;
+
+            AddBudgetItem(BudgetGroup.Label, "Streaming");
             AddBudgetItem(FinanceCategory.Netflix, budgetGroup, 10.67m);
             AddBudgetItem(FinanceCategory.Hulu, budgetGroup, 11.99m);
             AddBudgetItem(FinanceCategory.AmazonPrime, budgetGroup, 8.25m);
-            AddBudgetItem(budgetGroup, "Total");
-            AddBudgetItem(budgetGroup, "EmptyLine1");
-            AddBudgetItem(budgetGroup, "Insurance & Tax");
+            AddBudgetItem(BudgetGroup.Label, "Total");
+            AddBudgetItem(BudgetGroup.EmptyLine, "EmptyLine1");
+        }
+
+        private void AddInsuranceAndTax()
+        {
+            BudgetGroup budgetGroup = BudgetGroup.InsuranceAndTax;
+
+            AddBudgetItem(BudgetGroup.Label, "Insurance & Tax");
             AddBudgetItem(FinanceCategory.LifeInsurance, budgetGroup, 80.48m);
             AddBudgetItem(FinanceCategory.AutoInsurance, budgetGroup, 86.10m);
             AddBudgetItem(FinanceCategory.HouseInsurance, budgetGroup, 0.00m);
-            AddBudgetItem(budgetGroup, "Total");
-            AddBudgetItem(budgetGroup, "EmptyLine1");
-            AddBudgetItem(budgetGroup, "Debt");
+            AddBudgetItem(BudgetGroup.Label, "Total");
+            AddBudgetItem(BudgetGroup.EmptyLine, "EmptyLine1");
+        }
+
+        private void AddDebt()
+        {
+            BudgetGroup budgetGroup = BudgetGroup.Debt;
+
+            AddBudgetItem(BudgetGroup.Label, "Debt");
             AddBudgetItem(FinanceCategory.CreditCard, budgetGroup, 100.00m);
             AddBudgetItem(FinanceCategory.CreditCardChildSupport, budgetGroup, 200.00m);
-            AddBudgetItem(budgetGroup, "Total");
+            AddBudgetItem(BudgetGroup.Label, "Total");
+            AddBudgetItem(BudgetGroup.EmptyLine, "EmptyLine1");
+        }
+
+        private void AddOtherExpenses()
+        {
+            BudgetGroup budgetGroup = BudgetGroup.OtherExpenses;
+
+            AddBudgetItem(BudgetGroup.Label, "Other Expenses");
+            AddBudgetItem(FinanceCategory.OtherExpenses, budgetGroup, 0m);
+            AddBudgetItem(BudgetGroup.Label, "Total");
+            AddBudgetItem(BudgetGroup.EmptyLine, "EmptyLine1");
+        }
+
+        private void AddTotalExpense()
+        {
+            AddBudgetItem(BudgetGroup.Label, "Total Expense");
         }
 
         internal void AddBudgetItem(BudgetGroup budgetGroup, string header)
@@ -188,16 +273,19 @@ namespace FinanceHelper.Classes
     internal enum BudgetGroup
     {
         Debt,
+        EmptyLine,
         Giving,
         GroceriesAndEatingOut,
         Housing,
         InsuranceAndTax,
+        Label,
         Lifestyle,
+        OtherExpenses,
+        Savings,
+        Streaming,
         TotalExpenses,
         TotalIncome,
         Transportation,
-        Savings,
-        Streaming,
     }
 
     internal class BudgetItem
