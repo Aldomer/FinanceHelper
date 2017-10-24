@@ -25,6 +25,8 @@ namespace FinanceHelper.Classes
             AddCategoryTotalAmount(bankFileLoader.ChaseFinanceData.CategoryTotalAmount);
             AddCategoryTotalAmount(bankFileLoader.CyprusFinanceData.CategoryTotalAmount);
             AddCategoryTotalAmount(bankFileLoader.CapitalFinanceData.CategoryTotalAmount);
+
+            SetTotalRowValues();
         }
 
         private void AddCategoryTotalAmount(Dictionary<FinanceCategory, decimal> CategoryTotalAmount)
@@ -33,57 +35,122 @@ namespace FinanceHelper.Classes
             {
                 CombinedCategoryTotalAmount[financeCategory] += CategoryTotalAmount[financeCategory];
 
-                List<BudgetItem> searchResults = BudgetItemList.Where(sf => sf.Category == financeCategory).ToList();
-                if (searchResults.Count > 0 && financeCategory != FinanceCategory.NoMatch) //TODO Need to handle NoMatch later since Headers also have a category of NoMatch
-                { //TODO Also need to clean up FinanceCategory enum (Ex BluffdaleCity and City exist)
-                    BudgetItem budgetItem = searchResults[0];
-                    budgetItem.SpentAmount += CategoryTotalAmount[financeCategory];
+                List<BudgetItem> searchResults = BudgetItemList.Where(budgetItem => budgetItem.Category == financeCategory).ToList();
+
+                if (searchResults.Count > 0)
+                {
+                    BudgetItem budgetItem = null;
+                    if (financeCategory == FinanceCategory.NoMatch)
+                    {
+                        List<BudgetItem> removeHeaders = searchResults.Where(searchResult => searchResult.Header == String.Empty).ToList();
+
+                        if (removeHeaders.Count > 0)
+                            budgetItem = removeHeaders[0];
+                    }
+                    else
+                        budgetItem = searchResults[0];
+
+                    if (budgetItem != null)
+                    {
+                        budgetItem.SpentAmount += CategoryTotalAmount[financeCategory];
+                    }
                 }
             }
+        }
+
+        private void SetTotalRowValues()
+        {
+
         }
 
         internal List<BudgetItem> BudgetItemList = new List<BudgetItem>();
 
         internal void InitializeBudgetItemList()
         {
-            AddBudgetItem("Income");
-            AddBudgetItem(FinanceCategory.IDS, 5979.34m);
-            AddBudgetItem(FinanceCategory.ChildSupport, 198.00m);
-            AddBudgetItem(FinanceCategory.BeachBody, 28.00m);
-            AddBudgetItem(FinanceCategory.MiscellaneousIncome, 0.00m);
-            AddBudgetItem("Total Income");
-            AddBudgetItem("EmptyLine1");
-            AddBudgetItem("Expenses");
-            AddBudgetItem("Giving");
-            AddBudgetItem(FinanceCategory.Tithing, 900.44m);
-            AddBudgetItem(FinanceCategory.FastOfferings, 40.00m);
-            AddBudgetItem("Savings");
-            AddBudgetItem(FinanceCategory.EmergencyFund, 100.00m);
-            AddBudgetItem("Housing");
-            AddBudgetItem(FinanceCategory.Mortgage, 2087.73m);
-            AddBudgetItem(FinanceCategory.Hoa, 0.00m);
-            AddBudgetItem(FinanceCategory.Sewer, 25.00m);
-            AddBudgetItem(FinanceCategory.NaturalGas, 60.00m);
-            AddBudgetItem(FinanceCategory.Power, 140.00m);
-            AddBudgetItem(FinanceCategory.Phone, 120.00m);
-            AddBudgetItem(FinanceCategory.Television, 120.00m);
-            AddBudgetItem(FinanceCategory.EmergencyFund, 39.38m);
-            AddBudgetItem(FinanceCategory.BluffdaleCity, 48.70m);
-            AddBudgetItem(FinanceCategory.Internet, 66.95m);
-            AddBudgetItem("Transportation");
-            AddBudgetItem(FinanceCategory.CarMaintenance, 200.00m);
-            AddBudgetItem(FinanceCategory.CarReplacement, 0.00m);
-            AddBudgetItem(FinanceCategory.CarPayment, 660.00m);
+            BudgetGroup budgetGroup = BudgetGroup.TotalIncome;
+
+            AddBudgetItem(budgetGroup, "Income");
+            AddBudgetItem(FinanceCategory.IDS, budgetGroup, 6047.48m);
+            AddBudgetItem(FinanceCategory.ChildSupport, budgetGroup, 198.00m);
+            AddBudgetItem(budgetGroup, "Total Income");
+            AddBudgetItem(budgetGroup, "EmptyLine1");
+            AddBudgetItem(budgetGroup, "Expenses");
+            AddBudgetItem(budgetGroup, "Giving");
+            AddBudgetItem(FinanceCategory.Tithing, budgetGroup, 912.12m);
+            AddBudgetItem(FinanceCategory.FastOfferings, budgetGroup, 40.00m);
+            AddBudgetItem(budgetGroup, "Total");
+            AddBudgetItem(budgetGroup, "EmptyLine1");
+            AddBudgetItem(budgetGroup, "Savings");
+            AddBudgetItem(FinanceCategory.EmergencyFund, budgetGroup, 100.00m);
+            AddBudgetItem(budgetGroup, "Total");
+            AddBudgetItem(budgetGroup, "EmptyLine1");
+            AddBudgetItem(budgetGroup, "Housing");
+            AddBudgetItem(FinanceCategory.Mortgage, budgetGroup, 2152.04m);
+            AddBudgetItem(FinanceCategory.HomeImprovement, budgetGroup, 75.00m);
+            AddBudgetItem(FinanceCategory.Hoa, budgetGroup, 10.00m);
+            AddBudgetItem(FinanceCategory.Sewer, budgetGroup, 25.00m);
+            AddBudgetItem(FinanceCategory.NaturalGas, budgetGroup, 60.00m);
+            AddBudgetItem(FinanceCategory.Power, budgetGroup, 140.00m);
+            AddBudgetItem(FinanceCategory.Phone, budgetGroup, 165.00m);
+            AddBudgetItem(FinanceCategory.Television, budgetGroup, 88.31m);
+            AddBudgetItem(FinanceCategory.BluffdaleCity, budgetGroup, 50.00m);
+            AddBudgetItem(FinanceCategory.Internet, budgetGroup, 58.00m);
+            AddBudgetItem(budgetGroup, "Total");
+            AddBudgetItem(budgetGroup, "EmptyLine1");
+            AddBudgetItem(budgetGroup, "Transportation");
+            AddBudgetItem(FinanceCategory.Gas, budgetGroup, 180.00m);
+            AddBudgetItem(FinanceCategory.CarMaintenance, budgetGroup, 20.00m);
+            AddBudgetItem(FinanceCategory.CarPayment, budgetGroup, 660.00m);
+            AddBudgetItem(budgetGroup, "Total");
+            AddBudgetItem(budgetGroup, "EmptyLine1");
+            AddBudgetItem(budgetGroup, "Groceries and Eating Out");
+            AddBudgetItem(FinanceCategory.Groceries, budgetGroup, 370.00m);
+            AddBudgetItem(FinanceCategory.EatingOut, budgetGroup, 100.00m);
+            AddBudgetItem(budgetGroup, "Total");
+            AddBudgetItem(budgetGroup, "EmptyLine1");
+            AddBudgetItem(budgetGroup, "Lifestyle");
+            AddBudgetItem(FinanceCategory.PetCare, budgetGroup, 25.00m);
+            AddBudgetItem(FinanceCategory.Clothing, budgetGroup, 20.00m);
+            AddBudgetItem(FinanceCategory.Entertainment, budgetGroup, 60.00m);
+            AddBudgetItem(FinanceCategory.Sports, budgetGroup, 5.00m);
+            AddBudgetItem(FinanceCategory.Pedicure, budgetGroup, 15.00m);
+            AddBudgetItem(FinanceCategory.Music, budgetGroup, 60.00m);
+            AddBudgetItem(FinanceCategory.Health, budgetGroup, 130.00m);
+            AddBudgetItem(FinanceCategory.MeganAllowance, budgetGroup, 20.00m);
+            AddBudgetItem(FinanceCategory.NickAllowance, budgetGroup, 30.00m);
+            AddBudgetItem(FinanceCategory.EliSavings, budgetGroup, 20.00m);
+            AddBudgetItem(FinanceCategory.PennySavings, budgetGroup, 20.00m);
+            AddBudgetItem(FinanceCategory.PaigeSavings, budgetGroup, 20.00m);
+            AddBudgetItem(FinanceCategory.Baby4Savings, budgetGroup, 20.00m);
+            AddBudgetItem(FinanceCategory.Vacation, budgetGroup, 100.00m);
+            AddBudgetItem(budgetGroup, "Total");
+            AddBudgetItem(budgetGroup, "EmptyLine1");
+            AddBudgetItem(budgetGroup, "Streaming");
+            AddBudgetItem(FinanceCategory.Netflix, budgetGroup, 10.67m);
+            AddBudgetItem(FinanceCategory.Hulu, budgetGroup, 11.99m);
+            AddBudgetItem(FinanceCategory.AmazonPrime, budgetGroup, 8.25m);
+            AddBudgetItem(budgetGroup, "Total");
+            AddBudgetItem(budgetGroup, "EmptyLine1");
+            AddBudgetItem(budgetGroup, "Insurance & Tax");
+            AddBudgetItem(FinanceCategory.LifeInsurance, budgetGroup, 80.48m);
+            AddBudgetItem(FinanceCategory.AutoInsurance, budgetGroup, 86.10m);
+            AddBudgetItem(FinanceCategory.HouseInsurance, budgetGroup, 0.00m);
+            AddBudgetItem(budgetGroup, "Total");
+            AddBudgetItem(budgetGroup, "EmptyLine1");
+            AddBudgetItem(budgetGroup, "Debt");
+            AddBudgetItem(FinanceCategory.CreditCard, budgetGroup, 100.00m);
+            AddBudgetItem(FinanceCategory.CreditCardChildSupport, budgetGroup, 200.00m);
+            AddBudgetItem(budgetGroup, "Total");
         }
 
-        internal void AddBudgetItem(string header)
+        internal void AddBudgetItem(BudgetGroup budgetGroup, string header)
         {
-            BudgetItemList.Add(new BudgetItem(header));
+            BudgetItemList.Add(new BudgetItem(budgetGroup, header));
         }
 
-        internal void AddBudgetItem(FinanceCategory financeCategory, decimal plannedAmount)
+        internal void AddBudgetItem(FinanceCategory financeCategory, BudgetGroup budgetGroup, decimal plannedAmount)
         {
-            BudgetItemList.Add(new BudgetItem(financeCategory, plannedAmount, CombinedCategoryTotalAmount[financeCategory]));
+            BudgetItemList.Add(new BudgetItem(financeCategory, budgetGroup, plannedAmount));
         }
 
         internal Dictionary<string, decimal?> PlannedBudgetOld = new Dictionary<string, decimal?>
@@ -118,26 +185,51 @@ namespace FinanceHelper.Classes
         };
     }
 
+    internal enum BudgetGroup
+    {
+        Debt,
+        Giving,
+        GroceriesAndEatingOut,
+        Housing,
+        InsuranceAndTax,
+        Lifestyle,
+        TotalExpenses,
+        TotalIncome,
+        Transportation,
+        Savings,
+        Streaming,
+    }
+
     internal class BudgetItem
     {
         internal FinanceCategory Category;
+        internal BudgetGroup Group;
         internal decimal PlannedAmount;
         internal decimal SpentAmount;
-        internal decimal RemainingAmount;
+        internal decimal RemainingAmount
+        {
+            get
+            {
+                return PlannedAmount - SpentAmount;
+            }
+        }
 
         internal string Header;
 
-        internal BudgetItem(string header)
+        internal BudgetItem(BudgetGroup group, string header)
         {
             Header = header;
+
+            Group = group;
         }
 
-        internal BudgetItem(FinanceCategory category, decimal plannedAmount, decimal spentAmount = 0, decimal remainingAmount = 0)
+        internal BudgetItem(FinanceCategory category, BudgetGroup group, decimal plannedAmount)
         {
             Category = category;
             PlannedAmount = plannedAmount;
-            SpentAmount = spentAmount;
-            RemainingAmount = remainingAmount;
+            SpentAmount = 0;
+
+            Group = group;
 
             Header = String.Empty;
         }
